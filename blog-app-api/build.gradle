@@ -3,6 +3,6 @@ jar { enabled = false }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation project(':blog-history-domain')
-    implementation project(':blog-serch-client')
+    implementation project(':blog-searchhistory-domain')
+    implementation project(':blog-searchopenapi-client')
 }

@@ -29,7 +29,6 @@ subprojects {
 		mavenCentral()
 	}
 
-	// 관리하는 모듈에 공통 dependencies
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		implementation 'org.springframework.boot:spring-boot-starter'
@@ -59,7 +58,6 @@ subprojects {
 		mavenCentral()
 	}
 
-	// 하위 모듈에서 공통으로 사용하는 세팅 추가
 	dependencies {
 		compileOnly 'org.projectlombok:lombok'
 
@@ -74,4 +72,3 @@ subprojects {
 		useJUnitPlatform()
 	}
 }
-//

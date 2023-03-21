@@ -1,5 +1,5 @@
 rootProject.name = 'blog'
 include 'blog-app-api'
-include 'blog-history-domain'
-include 'blog-serch-client'
+include 'blog-searchhistory-domain'
+include 'blog-searchopenapi-client'
 

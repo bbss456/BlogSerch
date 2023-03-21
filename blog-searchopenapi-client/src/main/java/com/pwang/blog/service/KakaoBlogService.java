@@ -2,6 +2,7 @@ package com.pwang.blog.service;
 
 import com.pwang.blog.responsedto.BlogCoreResponseDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -15,25 +16,33 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class KakaoBlogService {
 
     private final NaverBlogService naverBlogService;
 
-//    @Value("${kakao.Apikey}")
-    private String kakaoApiKey= "asd";
+    @Value("${kakao.blog.host}")
+    private String kakaoUrlHost;
 
+    @Value("${kakao.blog.path}")
+    private String kakaoUrlpath;
 
-    public BlogCoreResponseDTO getBlogInfo(String url,String sort, int page, int size) {
+    @Value("${kakao.Apikey}")
+    private String kakaoApiKey;
 
-        UriComponents kakaoUrl = UriComponentsBuilder
-                .fromUriString(url)
+    public BlogCoreResponseDTO getBlogInfo(String query, String sort, int page, int size) {
+
+        UriComponents kakaoUrl = UriComponentsBuilder.newInstance()
+                .scheme("https").host(kakaoUrlHost)
+                .path(kakaoUrlpath)
+                .queryParam("query", query)
                 .queryParam("sort", sort)
                 .queryParam("page", page)
                 .queryParam("size",size)
                 .build();
 
         BlogCoreResponseDTO blogCoreResponseDTO = Optional.ofNullable(getKakaoBlogApi(kakaoUrl.toUriString()))
-                .orElseGet(()-> naverBlogService.getNaverBlogApi(url, sort, page, size));
+                .orElseGet(()-> naverBlogService.getNaverBlogApi(query, sort, page, size));
 
         return blogCoreResponseDTO;
     }
@@ -42,7 +51,7 @@ public class KakaoBlogService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-//        headers.set("Authorization", "KakaoAK " + kakaoApiKey);
+        headers.set("Authorization", "KakaoAK " + kakaoApiKey);
         HttpEntity<HttpHeaders> entity = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -54,13 +63,10 @@ public class KakaoBlogService {
                     entity,
                     new ParameterizedTypeReference<BlogCoreResponseDTO>() {}
             );
-            System.out.println(response.getBody());
         } catch (HttpClientErrorException error) {
+            log.error(error.toString());
             return null;
         }
         return response.getBody();
     }
-
-
-
 }

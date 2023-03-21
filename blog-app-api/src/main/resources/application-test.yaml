@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  output:
+    ansi:
+      enabled: always
+logging:
+  level:
+    org.hibernate.type: trace
+
+kakao:
+  blog:
+    host: dapi.kakao.com
+    path: /v2/search/blog
+  Apikey: 10cb3a953131b9eecef358a3963f9774
+
+naver:
+  blog:
+    host: openapi.naver.com
+    path: /v1/search/blog
+  X-Naver-Client-Id : _YfKGq5fSmWp6oEv5_T9
+  X-Naver-Client-Secret : 98Ji9VgXio
