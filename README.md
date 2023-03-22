@@ -1,6 +1,6 @@
 # BlogSerch
 # 다운로드 URL
-(https://github.com/bbss456/BlogSerch/raw/master/blog-plain-1.0-SNAPSHOT.jar) 
+(https://github.com/bbss456/BlogSerch/raw/master/blog-app-api-1.0-SNAPSHOT.jar) 
 
 # 외부 라이브러리
 ###
