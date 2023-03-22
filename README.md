@@ -1,7 +1,10 @@
 # BlogSerch
 # 다운로드 URL
 (https://github.com/bbss456/BlogSerch/raw/master/blog-app-api-1.0-SNAPSHOT.jar) 
-
+# Setting
+JAVA : 17 
+##
+SPring Boot : 3.0.4
 # 외부 라이브러리
 ###
 com.h2database:h2 : h2 DB
