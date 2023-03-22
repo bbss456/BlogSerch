@@ -3,7 +3,6 @@
 (https://github.com/bbss456/BlogSerch/raw/master/blog-plain-1.0-SNAPSHOT.jar) 
 
 # 외부 라이브러리
-org.springframework.boot:spring-boot-starter-web : spring boot
 ###
 com.h2database:h2 : h2 DB
 ###
