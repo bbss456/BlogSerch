@@ -2,6 +2,8 @@ package com.pwang.blog.service;
 
 import com.pwang.blog.dto.NaverDocumentDTO;
 import com.pwang.blog.dto.NaverResponseDTO;
+import com.pwang.blog.exception.ErrorCode;
+import com.pwang.blog.exception.ServiceException;
 import com.pwang.blog.responsedto.BlogCoreResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class NaverBlogService {
@@ -40,9 +43,8 @@ public class NaverBlogService {
                 .queryParam("sort", this.getConvertKakaoSort(sort))
                 .build();
 
-
-        NaverResponseDTO naverResponseDTO= this.getNaverResposeDTO(naverUrl.toUriString());
-
+        NaverResponseDTO naverResponseDTO= Optional.ofNullable(this.getNaverResposeDTO(naverUrl.toUriString()))
+                .orElseThrow(()-> new ServiceException("Kakao And Naver Open Api service 500", ErrorCode.SERVICE_ERROR_VALUE));
 
         BlogCoreResponseDTO blogCoreResponseDTO = new BlogCoreResponseDTO();
         blogCoreResponseDTO.setNaverDTO(naverResponseDTO, this.getisEnd(page, size, naverResponseDTO.getTotal()));

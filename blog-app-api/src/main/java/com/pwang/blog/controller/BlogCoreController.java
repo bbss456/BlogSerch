@@ -4,6 +4,7 @@ import com.pwang.blog.responsedto.BlogCoreResponseDTO;
 import com.pwang.blog.resposedto.BestKeywordResponseDTD;
 import com.pwang.blog.service.BlogSearchHistoryService;
 import com.pwang.blog.service.KakaoBlogService;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpHeaders;
@@ -33,11 +34,12 @@ public class BlogCoreController {
     }
 
     @GetMapping("/keyword")
-    public ResponseEntity<BlogCoreResponseDTO> getBlogInfo(@RequestParam(required = true) String query,
+    public ResponseEntity<BlogCoreResponseDTO> getBlogInfo(@RequestParam(required = true)  String query,
                                                            @RequestParam(required = false, defaultValue = "accuracy") String sort,
-                                                           @RequestParam(required = false, defaultValue = "1") int page,
+                                                           @RequestParam (required = false, defaultValue = "1") @Min(value = 0, message = "page is less than min")int page,
                                                            @RequestParam(required = false, defaultValue = "10") int size) throws ParseException {
 
+        kakaoBlogService.apiKeywordValidationi(query, page, size);
         blogSearchHistoryService.saveOrupdate(query);
 
         return new ResponseEntity<>(kakaoBlogService.getBlogInfo(query, sort, page, size), this.headers(), HttpStatus.OK);

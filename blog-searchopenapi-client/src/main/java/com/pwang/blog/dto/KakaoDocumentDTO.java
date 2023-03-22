@@ -1,12 +1,6 @@
 package com.pwang.blog.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Data
 public class KakaoDocumentDTO {
@@ -26,6 +20,7 @@ public class KakaoDocumentDTO {
         this.title = naverDocumentDTO.getTitle();
         this.datetime = naverDocumentDTO.getPostdate();
     }
+
 }
 
 

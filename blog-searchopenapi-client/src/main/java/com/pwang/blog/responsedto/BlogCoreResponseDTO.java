@@ -5,13 +5,7 @@ import com.pwang.blog.dto.KakaoDocumentDTO;
 import com.pwang.blog.dto.KakaoMetaDTO;
 import com.pwang.blog.dto.NaverDocumentDTO;
 import com.pwang.blog.dto.NaverResponseDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,4 +31,5 @@ public class BlogCoreResponseDTO {
             this.kakaoDocumentDTOList.add(kakaoDocumentDTOfromNaver);
         }
     }
+
 }

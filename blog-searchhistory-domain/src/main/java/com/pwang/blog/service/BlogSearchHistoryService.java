@@ -17,7 +17,6 @@ public class BlogSearchHistoryService {
     private final BlogSearchHistoryRepository blogSearchHistoryRepository;
 
     public BestKeywordResponseDTD getBestTenkeyword() {
-
         List<BlogSearchHistory> blogSearchHistoryList = blogSearchHistoryRepository.findBestTenKeyword()
                 .orElseThrow(()-> new RuntimeException("asd"));
 

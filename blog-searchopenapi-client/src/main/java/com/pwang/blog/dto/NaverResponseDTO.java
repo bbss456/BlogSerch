@@ -2,7 +2,6 @@ package com.pwang.blog.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,4 +12,5 @@ public class NaverResponseDTO {
 
     @JsonProperty("items")
     private List<NaverDocumentDTO> naverDocumentDTOList = new ArrayList<>();
+
 }

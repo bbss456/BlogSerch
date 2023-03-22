@@ -1,8 +1,6 @@
 package com.pwang.blog.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
@@ -18,4 +16,5 @@ public class KakaoMetaDTO {
         this.isEnd = isend;
         this.totalCount = totalcount;
     }
+
 }

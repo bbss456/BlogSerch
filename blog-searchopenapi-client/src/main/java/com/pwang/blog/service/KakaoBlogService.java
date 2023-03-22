@@ -1,5 +1,7 @@
 package com.pwang.blog.service;
 
+import com.pwang.blog.exception.ErrorCode;
+import com.pwang.blog.exception.InvalidValueException;
 import com.pwang.blog.responsedto.BlogCoreResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +32,11 @@ public class KakaoBlogService {
     @Value("${kakao.Apikey}")
     private String kakaoApiKey;
 
-    public BlogCoreResponseDTO getBlogInfo(String query, String sort, int page, int size) {
+    public void setKakaoBlogService(@Value("${kakao.Apikey}") String key) {
+        this.kakaoApiKey =  key;
+    }
 
+    public BlogCoreResponseDTO getBlogInfo(String query, String sort, int page, int size) {
         UriComponents kakaoUrl = UriComponentsBuilder.newInstance()
                 .scheme("https").host(kakaoUrlHost)
                 .path(kakaoUrlpath)
@@ -48,7 +53,6 @@ public class KakaoBlogService {
     }
 
     public BlogCoreResponseDTO getKakaoBlogApi(String url) {
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         headers.set("Authorization", "KakaoAK " + kakaoApiKey);
@@ -69,4 +73,19 @@ public class KakaoBlogService {
         }
         return response.getBody();
     }
+
+    public void apiKeywordValidationi(String query, int page, int size) {
+        if(query.equals("")) {
+            throw new InvalidValueException("query Not null", ErrorCode.INVALID_QUERY_VALUE);
+        } else if(page == 0) {
+            throw new InvalidValueException("page is less than min", ErrorCode.INVALID_PAGEMIN_VALUE);
+        } else if(page > 50) {
+            throw new InvalidValueException("page is more than max", ErrorCode.INVALID_PAGEMIN_VALUE);
+        } else if(size == 0) {
+            throw new InvalidValueException("size is less than min", ErrorCode.INVALID_PAGEMIN_VALUE);
+        } else if(size > 50) {
+            throw new InvalidValueException("size is more than max", ErrorCode.INVALID_SIZEMAX_VALUE);
+        }
+    }
+
 }
