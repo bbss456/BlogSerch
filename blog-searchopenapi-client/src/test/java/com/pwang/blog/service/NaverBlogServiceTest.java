@@ -1,6 +1,7 @@
 package com.pwang.blog.service;
 
 import com.pwang.blog.dto.NaverResponseDTO;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -13,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class NaverBlogServiceTest {
 
     @Test
-    public void 네이버_OPEN_API() {
+    @DisplayName("네이버_OPEN_API")
+    void getnaverOpenApi() {
 
         //given
         String naverUrlHost = "openapi.naver.com";

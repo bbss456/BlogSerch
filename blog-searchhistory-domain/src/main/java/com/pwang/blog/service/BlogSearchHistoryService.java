@@ -5,8 +5,8 @@ import com.pwang.blog.entity.BlogSearchHistory;
 import com.pwang.blog.repository.BlogSearchHistoryRepository;
 import com.pwang.blog.resposedto.BestKeywordResponseDTD;
 import lombok.RequiredArgsConstructor;
+import lombok.Synchronized;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -22,29 +22,28 @@ public class BlogSearchHistoryService {
 
         BestKeywordResponseDTD bestKeywordResponseDTD = new BestKeywordResponseDTD();
 
-        int rank = 1;
         for (BlogSearchHistory blogSearchHistory  : blogSearchHistoryList) {
-            BlogBestDto blogBestDto = new BlogBestDto(rank, blogSearchHistory.getKeyword(), blogSearchHistory.getCount());
+            BlogBestDto blogBestDto = new BlogBestDto(blogSearchHistory.getKeyword(), blogSearchHistory.getCount());
             bestKeywordResponseDTD.add(blogBestDto);
-            rank++;
         }
 
         return bestKeywordResponseDTD;
     }
 
-    public void saveOrupdate(String keyword) {
+    @Synchronized
+    public Boolean saveOrupdate(String keyword) {
         Optional<BlogSearchHistory> blogSearchHistoryOptional = blogSearchHistoryRepository.findByKeyword(keyword);
 
         if(blogSearchHistoryOptional.isPresent()) {
             BlogSearchHistory blogSearchHistory = blogSearchHistoryOptional.get();
             blogSearchHistory.increateCount();
-            System.out.println(blogSearchHistory.getCount());
-            blogSearchHistoryRepository.save(blogSearchHistory);
+            blogSearchHistoryRepository.saveAndFlush(blogSearchHistory);
         } else {
             this.saveInit(keyword);
         }
-    }
 
+        return Boolean.TRUE;
+    }
 
     public void saveInit(String keyword) {
         BlogSearchHistory blogSearchHistory = BlogSearchHistory
@@ -52,7 +51,7 @@ public class BlogSearchHistoryService {
                 .count(1L)
                 .keyword(keyword)
                 .build();
-        blogSearchHistoryRepository.save(blogSearchHistory);
+        blogSearchHistoryRepository.saveAndFlush(blogSearchHistory);
     }
 
 }
